@@ -8,3 +8,16 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+var scores, roundScore, activePlayer, dice;
+scores = [0, 0];
+roundScore = 0;
+
+activePlayer = 1;
+dice = Math.floor(Math.random() * 6) + 1;
+document.querySelector('#current-' + activePlayer).textContent = dice; //selects first thing it finds
+
+var x = document.querySelector('#score-0').textContent; //its a getter, so we get the value from the screen directly to console
+console.log(x);
+// Also we can use querrySelector to change the CSS of some element
+
+document.querySelector('.dice').style.display = 'none'; //now we dont want to show particular element on the screen(image of the dice "dice class")
