@@ -13,11 +13,19 @@ scores = [0, 0];
 roundScore = 0;
 
 activePlayer = 1;
-dice = Math.floor(Math.random() * 6) + 1;
-document.querySelector('#current-' + activePlayer).textContent = dice; //selects first thing it finds
 
-var x = document.querySelector('#score-0').textContent; //its a getter, so we get the value from the screen directly to console
-console.log(x);
-// Also we can use querrySelector to change the CSS of some element
+document.querySelector('.dice').style.display = 'none';
+// Now we set up a Roll dice button
 
-document.querySelector('.dice').style.display = 'none'; //now we dont want to show particular element on the screen(image of the dice "dice class")
+document.querySelector('.btn-roll').addEventListener('click', function() {
+    //1. we need a random number
+    var dice = Math.floor(Math.random() * 6) + 1;
+    //2. Display a result
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
+    // changing an image according to the dice number
+    diceDOM.src = 'dice-' + dice + '.png';
+    //3. Update the round score, IF the rolled number wasnt a 1
+
+    // thats an anonymous function
+});
