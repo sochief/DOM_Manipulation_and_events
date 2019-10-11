@@ -8,55 +8,66 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-var scores, roundScore, activePlayer, dice;
+var scores, roundScore, activePlayer, dice, gamePlaying, lastDice;
 init();
 
 // Now we set up a Roll dice button
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
-    //1. we need a random number
-    var dice = Math.floor(Math.random() * 6) + 1;
+    if (gamePlaying) {
+        //1. we need a random number
+        var dice = Math.floor(Math.random() * 6) + 1;
 
-    //2. Display a result
-    var diceDOM = document.querySelector('.dice');
-    diceDOM.style.display = 'block';
+        //2. Display a result
+        var diceDOM = document.querySelector('.dice');
+        diceDOM.style.display = 'block';
 
-    // changing an image according to the dice number
-    diceDOM.src = 'dice-' + dice + '.png';
+        // changing an image according to the dice number
+        diceDOM.src = 'dice-' + dice + '.png';
 
-    //3. Update the round score, IF the rolled number wasnt a 1
-    if (dice !== 1) {
-        // Add score
-        roundScore += dice;
-        document.querySelector(
-            '#current-' + activePlayer
-        ).textContent = roundScore;
-    } else {
-        // Next player
-        nextPlayer();
+        //3. Update the round score, IF the rolled number wasnt a 1
+        if (dice === 6 && lastDice === 6) {
+            //Player looses score
+            scores[activePlayer] = 0;
+            document.querySelector('#score-' + activePlayer).textContent = '0';
+            nextPlayer();
+        } else if (dice !== 1) {
+            // Add score
+            roundScore += dice;
+            document.querySelector(
+                '#current-' + activePlayer
+            ).textContent = roundScore;
+        } else {
+            // Next player
+            nextPlayer();
+            // thats an anonymous function
+        }
+        lastDice = dice;
     }
-
-    // thats an anonymous function
 });
 document.querySelector('.btn-hold').addEventListener('click', function() {
-    // Adding current score to the global
-    scores[activePlayer] = +roundScore;
-    // Update the user interface
-    document.querySelector('#score-' + activePlayer).textContent =
-        scores[activePlayer];
-    // Check if the player won the game
-    if (scores[activePlayer] >= 100) {
-        document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
-        document.querySelector('.dice').style.display = 'none';
-        document
-            .querySelector('.player-' + activePlayer + '-panel')
-            .classList.add('winner');
-        document
-            .querySelector('.player-' + activePlayer + '-panel')
-            .classList.remove('active');
-    } else {
-        // Next player
-        nextPlayer();
+    if (gamePlaying) {
+        // Adding current score to the global
+        scores[activePlayer] = +roundScore;
+        // Update the user interface
+        document.querySelector('#score-' + activePlayer).textContent =
+            scores[activePlayer];
+        // Check if the player won the game
+        if (scores[activePlayer] >= 100) {
+            document.querySelector('#name-' + activePlayer).textContent =
+                'Winner!';
+            document.querySelector('.dice').style.display = 'none';
+            document
+                .querySelector('.player-' + activePlayer + '-panel')
+                .classList.add('winner');
+            document
+                .querySelector('.player-' + activePlayer + '-panel')
+                .classList.remove('active');
+            gamePlaying = false;
+        } else {
+            // Next player
+            nextPlayer();
+        }
     }
 });
 function nextPlayer() {
@@ -78,6 +89,7 @@ function init() {
     scores = [0, 0];
     activePlayer = 0;
     roundScore = 0;
+    gamePlaying = true;
     document.querySelector('.dice').style.display = 'none';
 
     document.getElementById('score-0').textContent = '0';
@@ -93,3 +105,8 @@ function init() {
     // assure, that there is no active class, and then activate 1, so there will be no bugs
     document.querySelector('.player-0-panel').classList.add('active');
 }
+
+// Coding challenges:
+// 1. A player looses his ENTIRE score, if he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable)
+// 2. Add an input field to the HTML where players cn set the winning score, so that they can change the predefined scote of 100. (Hint: you can read that calue with the .value property in JS.)
+// 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to posutuin the second dice, so take a look at the CSS code for the first one.)
