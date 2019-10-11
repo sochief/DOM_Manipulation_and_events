@@ -42,17 +42,43 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         ).textContent = roundScore;
     } else {
         // Next player
-        activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-        roundScore = 0;
-
-        document.getElementById('current-0').textContent = '0';
-        document.getElementById('current-1').textContent = '0';
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');
-        // Toggle to swap current playing panels
-
-        // so for more clear code and if the IF statement is very simple you can use turnary operator instead of writing full if-else statement
+        nextPlayer();
     }
 
     // thats an anonymous function
 });
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    // Adding current score to the global
+    scores[activePlayer] = +roundScore;
+    // Update the user interface
+    document.querySelector('#score-' + activePlayer).textContent =
+        scores[activePlayer];
+    // Check if the player won the game
+    if (scores[activePlayer] >= 100) {
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+        document.querySelector('.dice').style.display = 'none';
+        document
+            .querySelector('.player-' + activePlayer + '-panel')
+            .classList.add('winner');
+        document
+            .querySelector('.player-' + activePlayer + '-panel')
+            .classList.remove('active');
+    } else {
+        // Next player
+        nextPlayer();
+    }
+});
+function nextPlayer() {
+    // Next player
+    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+    roundScore = 0;
+
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+    // Toggle to swap current playing panels
+    document.querySelector('.dice').style.display = 'none';
+
+    // so for more clear code and if the IF statement is very simple you can use turnary operator instead of writing full if-else statement
+}
