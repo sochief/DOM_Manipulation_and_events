@@ -59,3 +59,6 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 // first one is the type of the event
 //and the second type is the function which will be called as soon as event happens
 // SO now the btn function is a call back function, coz we dont call it, its called by the other function*/
+
+//document.querySelector('.player-0-panel').classList.remove('active');
+//document.querySelector('player-1-panel').classList.add('active');

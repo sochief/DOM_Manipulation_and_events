@@ -25,11 +25,14 @@ document.getElementById('current-1').textContent = '0';
 document.querySelector('.btn-roll').addEventListener('click', function() {
     //1. we need a random number
     var dice = Math.floor(Math.random() * 6) + 1;
+
     //2. Display a result
     var diceDOM = document.querySelector('.dice');
     diceDOM.style.display = 'block';
+
     // changing an image according to the dice number
     diceDOM.src = 'dice-' + dice + '.png';
+
     //3. Update the round score, IF the rolled number wasnt a 1
     if (dice !== 1) {
         // Add score
@@ -46,11 +49,10 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         document.getElementById('current-1').textContent = '0';
         document.querySelector('.player-0-panel').classList.toggle('active');
         document.querySelector('.player-1-panel').classList.toggle('active');
+        // Toggle to swap current playing panels
+
         // so for more clear code and if the IF statement is very simple you can use turnary operator instead of writing full if-else statement
     }
 
     // thats an anonymous function
 });
-
-//document.querySelector('.player-0-panel').classList.remove('active');
-//document.querySelector('player-1-panel').classList.add('active');
