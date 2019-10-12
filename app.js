@@ -52,8 +52,16 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         // Update the user interface
         document.querySelector('#score-' + activePlayer).textContent =
             scores[activePlayer];
+        var input = document.querySelector('final-score').nodeValue;
+        // Undefined,0 , null or "" are coerced to false
+        // Anything else is coerced to true
+        if (input) {
+            var winningScore = input;
+        } else {
+            winningScore = 100;
+        }
         // Check if the player won the game
-        if (scores[activePlayer] >= 100) {
+        if (scores[activePlayer] >= winningScore) {
             document.querySelector('#name-' + activePlayer).textContent =
                 'Winner!';
             document.querySelector('.dice').style.display = 'none';
@@ -91,7 +99,6 @@ function init() {
     roundScore = 0;
     gamePlaying = true;
     document.querySelector('.dice').style.display = 'none';
-
     document.getElementById('score-0').textContent = '0';
     document.getElementById('score-1').textContent = '0';
     document.getElementById('current-0').textContent = '0';
@@ -107,6 +114,6 @@ function init() {
 }
 
 // Coding challenges:
-// 1. A player looses his ENTIRE score, if he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable)
-// 2. Add an input field to the HTML where players cn set the winning score, so that they can change the predefined scote of 100. (Hint: you can read that calue with the .value property in JS.)
+// 1.(DONE) A player looses his ENTIRE score, if he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable)
+// 2. Add an input field to the HTML where players cn set the winning score, so that they can change the predefined scote of 100. (Hint: you can read that value with the .value property in JS.)
 // 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to posutuin the second dice, so take a look at the CSS code for the first one.)
